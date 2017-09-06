@@ -38,6 +38,7 @@ set wildmenu
 
 set list
 set listchars=tab:>-,extends:<,trail:-
+set backspace=indent,eol,start
 
 set hlsearch
 
