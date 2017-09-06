@@ -56,6 +56,7 @@ set ambiwidth=double
 " set imdisable
 set iminsert=0
 set imsearch=0
+inoremap <ESC> <ESC>:set iminsert=0<CR>
 
 " compiler msvc
 " set makeprg=nmake
