@@ -42,22 +42,28 @@ set backspace=indent,eol,start
 
 set hlsearch
 
-set guioptions-=m
-set guioptions-=T
-set guioptions-=r
-set guioptions-=R
-set guioptions-=l
-set guioptions-=L
-set guioptions-=b
-set guifont=VL_Gothic_Regular:h10,Source_Code_Pro:h10
-" set guifont=Source_Code_Pro:h10
-set guifontwide=VL_Gothic_Regular:h10
-set ambiwidth=double
+if has("gui_running")
+  if has("windows")
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=b
+    set guifont=VL_Gothic_Regular:h10,Source_Code_Pro:h10
+    " set guifont=Source_Code_Pro:h10
+    set guifontwide=VL_Gothic_Regular:h10
+    set ambiwidth=double
 
-" set imdisable
-set iminsert=0
-set imsearch=0
-inoremap <ESC> <ESC>:set iminsert=0<CR>
+    " set imdisable
+    set iminsert=0
+    set imsearch=0
+    inoremap <ESC> <ESC>:set iminsert=0<CR>
+
+    set renderoptions=type:directx,renmode:5
+  endif
+endif
 
 " compiler msvc
 " set makeprg=nmake
