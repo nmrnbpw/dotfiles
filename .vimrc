@@ -42,6 +42,8 @@ set backspace=indent,eol,start
 
 set hlsearch
 
+set encoding=utf8
+
 if has("gui_running")
   if has("windows")
     set guioptions-=m
@@ -73,4 +75,6 @@ if has('unix')
 else
   language messages en
 endif
+
+cd ~
 
