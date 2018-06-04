@@ -1,3 +1,46 @@
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=d:/software/vim/./repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('d:/software/vim/.')
+  call dein#begin('d:/software/vim/.')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('d:/software/vim/./repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
+
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+"End dein Scripts-------------------------
+
+
 syntax on
 colorscheme desert
 " set nocompatible
@@ -53,9 +96,10 @@ if has("gui_running")
     set guioptions-=l
     set guioptions-=L
     set guioptions-=b
-    set guifont=VL_Gothic_Regular:h10,Source_Code_Pro:h10
+    set guioptions-=e
+    set guifont=VL_Gothic_Regular:h11,Source_Code_Pro:h11
     " set guifont=Source_Code_Pro:h10
-    set guifontwide=VL_Gothic_Regular:h10
+    set guifontwide=VL_Gothic_Regular:h11
     set ambiwidth=double
 
     " set imdisable
@@ -75,6 +119,9 @@ if has('unix')
 else
   language messages en
 endif
+
+vnoremap <c-a> <c-a>gv
+vnoremap <c-x> <c-x>gv
 
 cd ~
 
