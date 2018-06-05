@@ -1,3 +1,5 @@
+set encoding=utf-8
+
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -23,6 +25,9 @@ if dein#load_state('d:/software/vim/.')
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('altercation/vim-colors-solarized')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('thinca/vim-quickrun')
 
   " Required:
   call dein#end()
@@ -42,11 +47,27 @@ endif
 
 
 syntax on
-colorscheme desert
+" colorscheme desert
 " set nocompatible
 " source $VIMRUNTIME/vimrc_example.vim
 " source $VIMRUNTIME/mswin.vim
 " behave mswin
+
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
+
+" vim-airline
+let g:airline_solarized_bg='dark'
+let g:airline_theme='solarized'
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#show_buffers=1
+let g:airline#extensions#tabline#buffer_nr_show=1
+let g:airline#extensions#tabline#show_tabs=0
+
+" let g:airline_powerline_fonts=1
+" let g:Powerline_symbols='unicode'
+
 
 set number
 set relativenumber
@@ -85,7 +106,13 @@ set backspace=indent,eol,start
 
 set hlsearch
 
-set encoding=utf8
+set belloff=all
+
+set hidden
+
+vnoremap <c-a> <c-a>gv
+vnoremap <c-x> <c-x>gv
+
 
 if has("gui_running")
   if has("windows")
@@ -97,9 +124,11 @@ if has("gui_running")
     set guioptions-=L
     set guioptions-=b
     set guioptions-=e
-    set guifont=VL_Gothic_Regular:h11,Source_Code_Pro:h11
+
+    " set guifont=VL_Gothic_Regular:h11,Source_Code_Pro:h11
+    set guifont=NasuM:h11:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
     " set guifont=Source_Code_Pro:h10
-    set guifontwide=VL_Gothic_Regular:h11
+    " set guifontwide=VL_Gothic_Regular:h11
     set ambiwidth=double
 
     " set imdisable
@@ -119,9 +148,6 @@ if has('unix')
 else
   language messages en
 endif
-
-vnoremap <c-a> <c-a>gv
-vnoremap <c-x> <c-x>gv
 
 cd ~
 
