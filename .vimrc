@@ -28,6 +28,7 @@ if dein#load_state('d:/software/vim/.')
   call dein#add('altercation/vim-colors-solarized')
   call dein#add('scrooloose/nerdtree')
   call dein#add('thinca/vim-quickrun')
+  call dein#add('Shougo/denite.nvim')
 
   " Required:
   call dein#end()
@@ -112,6 +113,12 @@ set hidden
 
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
+
+
+map <Leader>y "+y
+map <Leader>y ggVG"+y
+map <Leader>p "+p
+map <Leader>v ggVG
 
 
 if has("gui_running")
