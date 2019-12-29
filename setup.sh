@@ -6,3 +6,6 @@ ln -s dotfiles/.vimrc
 ln -s dotfiles/.zshrc
 popd
 
+git config --local user.name nmrnbpw
+git config --local user.email n/a
+
