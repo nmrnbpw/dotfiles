@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+sudo yum install zsh vim tmux git -y
 
 pushd ~
-ln -s dotfiles/.tmux.conf
-ln -s dotfiles/.vimrc
-ln -s dotfiles/.zshrc
+  git clone https://github.com/nmrnbpw/dotfiles
+  pushd dotfiles
+    sh setup.sh
+  popd
 popd
 
