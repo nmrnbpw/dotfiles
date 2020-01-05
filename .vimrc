@@ -1,4 +1,5 @@
 set encoding=utf-8
+scriptencoding utf-8
 
 "dein Scripts-----------------------------
 if &compatible
@@ -26,6 +27,10 @@ if dein#load_state('d:/software/vim/.')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('altercation/vim-colors-solarized')
+
+  call dein#add('ryanoasis/vim-devicons')
+  " call dein#add('liuchengxu/vista.vim')
+
   call dein#add('scrooloose/nerdtree')
   call dein#add('thinca/vim-quickrun')
   call dein#add('Shougo/denite.nvim')
@@ -67,10 +72,18 @@ if has("gui_running")
   let g:airline#extensions#tabline#buffer_nr_show=1
   let g:airline#extensions#tabline#show_tabs=0
 
-  " let g:airline_powerline_fonts=1
-  " let g:Powerline_symbols='unicode'
+  let g:airline_powerline_fonts=1
+  let g:Powerline_symbols='unicode'
+
+  " NERDTree
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+  let g:NERDTreeShowHidden=1
+  let g:NERDTreeDirArrows=1
+  " let g:NERDTreeDirArrowExpandable = '▸'
+  " let g:NERDTreeDirArrowCollapsible = '▾'
 
   set cursorline
+  set cursorcolumn
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
   highlight CurosrLine gui=underline guifg=NONE guibg=NONE
 endif
@@ -79,6 +92,10 @@ endif
 set number
 set relativenumber
 set ruler
+set laststatus=2
+set cmdheight=2
+set termguicolors
+set scrolloff=8
 
 set expandtab
 set tabstop=2
@@ -86,6 +103,8 @@ set shiftwidth=2
 set softtabstop=2
 
 set showmatch
+set matchpairs& matchpairs+=<:>
+set matchtime=3
 set showcmd
 
 set autoindent
@@ -93,9 +112,17 @@ set smarttab
 
 set nobackup
 set noswapfile
+set undofile
+if has('unix')
+  set undodir=/tmp/.vimundo_$USER
+else
+  set undodir=$TMP\_vimundo_$USERNAME
+endif
 
 set ignorecase
 set wildmenu
+set completeopt=menuone,noinsert
+set breakindent
 
 " color pablo
 " set background=light
@@ -104,7 +131,8 @@ set wildmenu
 " set t_Co=256
 
 set list
-set listchars=tab:>-,extends:<,trail:-
+" set listchars=tab:>-,extends:<,trail:-
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set backspace=indent,eol,start
 
 set hlsearch
@@ -135,6 +163,8 @@ map <Leader>l :bnext<CR>
 map <Leader>H :bfirst<CR>
 map <Leader>L :blast<CR>
 
+map <Leader>f :NERDTreeToggle<CR>
+
 if has("gui_running")
   if has("windows")
     set guioptions-=m
@@ -147,17 +177,21 @@ if has("gui_running")
     set guioptions-=e
 
     " set guifont=VL_Gothic_Regular:h11,Source_Code_Pro:h11
-    set guifont=NasuM:h11:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
+    " set guifont=NasuM:h11:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
+    " set guifont=Cica:h12:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
     " set guifont=Source_Code_Pro:h10
     " set guifontwide=VL_Gothic_Regular:h11
+    " set renderoptions=type:directx,renmode:5
+
+    set guifont=Cica:h12:cDEFAULT:qDRAFT
+    set printfont=Cica:h8
+    set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
     set ambiwidth=double
 
     " set imdisable
     set iminsert=0
     set imsearch=0
     inoremap <ESC> <ESC>:set iminsert=0<CR>
-
-    set renderoptions=type:directx,renmode:5
   endif
 endif
 
