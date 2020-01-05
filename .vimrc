@@ -6,16 +6,26 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath+=d:/software/vim/./repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('d:/software/vim/.')
-  call dein#begin('d:/software/vim/.')
+if has('unix')
+  let s:cache_home=empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+  let s:dein_dir=s:cache_home . '/dein'
+  let s:dein_repo_dir=s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+else
+  let s:cache_home=$VIM . '\.cache'
+  let s:dein_dir=s:cache_home . '\dein'
+  let s:dein_repo_dir=s:dein_dir . '\repos\github.com\Shougo\dein.vim'
+endif
+
+" Required:
+let &runtimepath=s:dein_repo_dir .",". &runtimepath
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
 
   " Let dein manage dein
   " Required:
-  call dein#add('d:/software/vim/./repos/github.com/Shougo/dein.vim')
+  call dein#add(s:dein_repo_dir)
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
@@ -75,18 +85,19 @@ if has("gui_running")
   let g:airline_powerline_fonts=1
   let g:Powerline_symbols='unicode'
 
-  " NERDTree
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-  let g:NERDTreeShowHidden=1
-  let g:NERDTreeDirArrows=1
-  " let g:NERDTreeDirArrowExpandable = '▸'
-  " let g:NERDTreeDirArrowCollapsible = '▾'
-
   set cursorline
   set cursorcolumn
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
   highlight CurosrLine gui=underline guifg=NONE guibg=NONE
 endif
+
+" NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeShowHidden=1
+let g:NERDTreeDirArrows=1
+" let g:NERDTreeDirArrowExpandable = '▸'
+" let g:NERDTreeDirArrowCollapsible = '▾'
+
 
 
 set number
