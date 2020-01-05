@@ -70,10 +70,6 @@ syntax on
 " behave mswin
 
 if has("gui_running")
-  set background=dark
-  colorscheme solarized
-  let g:solarized_termcolors=256
-
   " vim-airline
   let g:airline_solarized_bg='dark'
   let g:airline_theme='solarized'
@@ -85,11 +81,17 @@ if has("gui_running")
   let g:airline_powerline_fonts=1
   let g:Powerline_symbols='unicode'
 
+  set termguicolors
   set cursorline
   set cursorcolumn
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
   highlight CurosrLine gui=underline guifg=NONE guibg=NONE
 endif
+
+" color scheme
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
 
 " NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -105,7 +107,6 @@ set relativenumber
 set ruler
 set laststatus=2
 set cmdheight=2
-set termguicolors
 set scrolloff=8
 
 set expandtab
