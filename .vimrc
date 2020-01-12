@@ -111,7 +111,7 @@ set relativenumber
 set ruler
 set laststatus=2
 set cmdheight=2
-set scrolloff=8
+" set scrolloff=8
 
 set expandtab
 set tabstop=2
