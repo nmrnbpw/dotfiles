@@ -132,6 +132,7 @@ set hlsearch
 set belloff=all
 
 set hidden
+set autochdir
 
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
