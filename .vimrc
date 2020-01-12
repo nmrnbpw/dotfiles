@@ -99,7 +99,11 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeDirArrows=1
 " let g:NERDTreeDirArrowExpandable = '▸'
 " let g:NERDTreeDirArrowCollapsible = '▾'
-
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
+" アイコン入力方法 : `[Ctrl+V]` > `[u]` > `e905`
+let g:NERDTreeExtensionHighlightColor = {}
+let g:NERDTreeExtensionHighlightColor['vue'] = '42B983'
 
 
 set number
