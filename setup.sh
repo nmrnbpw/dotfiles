@@ -3,6 +3,7 @@
 pushd ~
 ln -s dotfiles/.tmux.conf
 ln -s dotfiles/.vimrc
+ln -s dotfiles/.gvimrc
 ln -s dotfiles/.zshrc
 popd
 
