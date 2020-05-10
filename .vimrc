@@ -62,7 +62,10 @@ endif
 "End dein Scripts-------------------------
 
 
+let g:solarized_termtrans=1
 syntax on
+set background=dark
+colorscheme solarized
 " colorscheme desert
 " set nocompatible
 " source $VIMRUNTIME/vimrc_example.vim
