@@ -4,7 +4,7 @@
 # General Settings
 # ------------------------------
 export EDITOR=vim        # エディタをvimに設定
-# export LANG=ja_JP.UTF-8  # 文字コードをUTF-8に設定
+export LANG=ja_JP.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
 
@@ -243,7 +243,4 @@ export PYTHONPATH=$PYTHONPATH:/usr/local/lib/svn-python
 export PATH=/usr/local/bin:$PATH
 # source $(which virtualenvwrapper.sh)
 
-alias vim="$HOME/usr/bin/vim"
-
-source ~/dotfiles/.zshrc.antigen
 
