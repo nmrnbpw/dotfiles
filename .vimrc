@@ -45,6 +45,12 @@ if dein#load_state(s:dein_dir)
   call dein#add('thinca/vim-quickrun')
   call dein#add('Shougo/denite.nvim')
 
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('mattn/vim-lsp-settings')
+
+  call dein#add('prabirshrestha/asyncomplete.vim')
+  call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+
   " Required:
   call dein#end()
   call dein#save_state()
@@ -102,6 +108,18 @@ if has("gui_running")
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
   highlight CurosrLine gui=underline guifg=NONE guibg=NONE
 endif
+
+" " vista
+" function! NearestMethodOrFunction() abort
+"   return get(b:, 'vista_nearest_method_or_function', '')
+" endfunction
+" 
+" set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+" autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 
 set number
