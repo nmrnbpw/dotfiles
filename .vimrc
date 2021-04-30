@@ -27,12 +27,23 @@ if dein#load_state(s:dein_dir)
   " Required:
   call dein#add(s:dein_repo_dir)
 
+  call dein#add('vim-jp/vimdoc-ja')
+
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
 
+  call dein#add('kana/vim-operator-user')
+  call dein#add('kana/vim-textobj-user')
+  call dein#add('kana/vim-operator-replace')
+  call dein#add('rhysd/vim-operator-surround')
+  call dein#add('tpope/vim-surround')
+  call dein#add('nathanaelkane/vim-indent-guides')
+  call dein#add('Shougo/neocomplete.vim')
+
   " You can specify revision/branch/tag.
-  call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
+  " call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
+  call dein#add('Shougo/deol.nvim')
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -44,6 +55,12 @@ if dein#load_state(s:dein_dir)
   call dein#add('scrooloose/nerdtree')
   call dein#add('thinca/vim-quickrun')
   call dein#add('Shougo/denite.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/unite-outline')
 
   call dein#add('prabirshrestha/vim-lsp')
   call dein#add('mattn/vim-lsp-settings')
@@ -90,18 +107,52 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 let g:NERDTreeExtensionHighlightColor = {}
 let g:NERDTreeExtensionHighlightColor['vue'] = '42B983'
 
+" vim-airline
+let g:airline_solarized_bg='dark'
+let g:airline_theme='solarized'
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#show_buffers=1
+let g:airline#extensions#tabline#buffer_nr_show=1
+let g:airline#extensions#tabline#show_tabs=0
+
+let g:airline_powerline_fonts=1
+let g:Powerline_symbols='unicode'
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+
 if has("gui_running")
-  " vim-airline
-  let g:airline_solarized_bg='dark'
-  let g:airline_theme='solarized'
-  let g:airline#extensions#tabline#enabled=1
-  let g:airline#extensions#tabline#show_buffers=1
-  let g:airline#extensions#tabline#buffer_nr_show=1
-  let g:airline#extensions#tabline#show_tabs=0
-
-  let g:airline_powerline_fonts=1
-  let g:Powerline_symbols='unicode'
-
   set termguicolors
   set cursorline
   set cursorcolumn
@@ -151,7 +202,12 @@ else
   set undodir=$TMP\_vimundo_$USERNAME
 endif
 
+set clipboard=unnamed
+
 set ignorecase
+set incsearch
+set wrapscan
+set smartcase
 set wildmenu
 set completeopt=menuone,noinsert
 set breakindent
