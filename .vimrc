@@ -39,7 +39,6 @@ if dein#load_state(s:dein_dir)
   call dein#add('rhysd/vim-operator-surround')
   call dein#add('tpope/vim-surround')
   call dein#add('nathanaelkane/vim-indent-guides')
-  call dein#add('Shougo/neocomplete.vim')
 
   " You can specify revision/branch/tag.
   " call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
@@ -50,7 +49,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('altercation/vim-colors-solarized')
 
   call dein#add('ryanoasis/vim-devicons')
-  " call dein#add('liuchengxu/vista.vim')
+  call dein#add('liuchengxu/vista.vim')
 
   call dein#add('scrooloose/nerdtree')
   call dein#add('thinca/vim-quickrun')
@@ -62,11 +61,13 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/unite-outline')
 
-  call dein#add('prabirshrestha/vim-lsp')
-  call dein#add('mattn/vim-lsp-settings')
+  call dein#add('neoclide/coc.nvim')
 
-  call dein#add('prabirshrestha/asyncomplete.vim')
-  call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+  " call dein#add('prabirshrestha/vim-lsp')
+  " call dein#add('mattn/vim-lsp-settings')
+
+  " call dein#add('prabirshrestha/asyncomplete.vim')
+  " call dein#add('prabirshrestha/asyncomplete-lsp.vim')
 
   " Required:
   call dein#end()
@@ -160,17 +161,22 @@ if has("gui_running")
   highlight CurosrLine gui=underline guifg=NONE guibg=NONE
 endif
 
-" " vista
-" function! NearestMethodOrFunction() abort
-"   return get(b:, 'vista_nearest_method_or_function', '')
-" endfunction
-" 
-" set statusline+=%{NearestMethodOrFunction()}
+
+if has("windows")
+  " let g:python3_host_prog = ''
+endif
+
+" vista
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
 
 " By default vista.vim never run if you don't call it explicitly.
 " If you want to show the nearest function in your statusline automatically,
 " you can add the following line to your vimrc
-" autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 
 set number
