@@ -171,8 +171,10 @@ if has("gui_running")
 endif
 
 
-if has("windows")
-  let g:python3_host_prog = '%LOCALAPPDIR%\Programs\Python\Python39\python.exe'
+if has('unix')
+  let g:python3_host_prog = expand('$HOME/usr/bin/python3') 
+else
+  let g:python3_host_prog = expand('~\AppData\Local\Programs\Python\Python39\python.exe')
 endif
 
 " vista
