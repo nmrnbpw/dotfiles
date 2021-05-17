@@ -44,6 +44,9 @@ if dein#load_state(s:dein_dir)
   " call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
   call dein#add('Shougo/deol.nvim')
 
+  call dein#add('w0rp/ale')
+  call dein#add('dhruvasagar/vim-table-mode')
+
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('altercation/vim-colors-solarized')
@@ -58,10 +61,13 @@ if dein#load_state(s:dein_dir)
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
+
   call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/unite-outline')
 
   call dein#add('neoclide/coc.nvim')
+
+  call dein#add('reconquest/vim-pythonx')
 
   " call dein#add('prabirshrestha/vim-lsp')
   " call dein#add('mattn/vim-lsp-settings')
@@ -95,6 +101,9 @@ colorscheme solarized
 " source $VIMRUNTIME/vimrc_example.vim
 " source $VIMRUNTIME/mswin.vim
 " behave mswin
+
+" vimdoc-ja
+:set helplang=ja,en
 
 " NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -163,7 +172,7 @@ endif
 
 
 if has("windows")
-  " let g:python3_host_prog = ''
+  let g:python3_host_prog = '%LOCALAPPDIR%\Programs\Python\Python39\python.exe'
 endif
 
 " vista
@@ -208,7 +217,7 @@ else
   set undodir=$TMP\_vimundo_$USERNAME
 endif
 
-set clipboard=unnamed
+" set clipboard=unnamed
 
 set ignorecase
 set incsearch
@@ -298,6 +307,24 @@ if has('unix')
 else
   language messages en
 endif
+
+" Denite
+" Change file/rec command.
+call denite#custom#var('file/rec', 'command',
+\ ['rg', '--files', '--glob', '!.git'])
+
+" Ripgrep command on grep source
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['-i', '--vimgrep', '--no-heading'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+" Specify multiple paths in grep source
+"call denite#start([{'name': 'grep',
+"      \ 'args': [['a.vim', 'b.vim'], '', 'pattern']}])
 
 cd ~
 
