@@ -51,7 +51,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/defx.nvim')
   call dein#add('Shougo/deoppet.nvim')
 
-  call dein#add('junegunn/fzf.vim')
+  call dein#add('junegunn/fzf', { 'build': './install' })
+  call dein#add('junegunn/fzf.vim', { 'depends': 'junegunn/fzf' })
   call dein#add('dense-analysis/ale')
   call dein#add('dhruvasagar/vim-table-mode')
   call dein#add('tpope/vim-fugitive')
@@ -72,6 +73,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/unite-outline')
 
   call dein#add('neoclide/coc.nvim')
+
+  call dein#add('rust-lang/rust.vim')
 
   " call dein#add('reconquest/vim-pythonx')
 
@@ -167,8 +170,10 @@ let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#show_tabs=0
 let g:airline#extensions#wgutesoace=1
 
-let g:airline_powerline_fonts=1
-let g:Powerline_symbols='unicode'
+if has("gui_running")
+  let g:airline_powerline_fonts=1
+  let g:Powerline_symbols='unicode'
+endif
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -218,6 +223,9 @@ if has('unix')
 else
   let g:python3_host_prog = expand('~\AppData\Local\Programs\Python\Python39\python.exe')
 endif
+
+" rust
+let g:rustfmt_autosave = 1
 
 " Vista
 function! NearestMethodOrFunction() abort
