@@ -36,8 +36,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('kana/vim-operator-user')
   call dein#add('kana/vim-textobj-user')
   call dein#add('kana/vim-operator-replace')
-  call dein#add('rhysd/vim-operator-surround')
   call dein#add('tpope/vim-surround')
+  call dein#add('rhysd/vim-operator-surround')
   call dein#add('nathanaelkane/vim-indent-guides')
 
   " You can specify revision/branch/tag.
@@ -136,6 +136,23 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
+
+" vim-operator-surround
+map sa <Plug>(operator-surround-append)
+map sd <Plug>(operator-surround-delete)a
+map sr <Plug>(operator-surround-replace)a
+
+let g:operator#surround#blocks = {}
+let g:operator#surround#blocks['-'] = [
+    \   { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['P'] },
+    \   { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['B'] },
+    \   { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['D'] },
+    \   { 'block' : ['【', '】'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['S'] },
+    \   { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['Y'] },
+    \   { 'block' : ['｛', '｝'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['N'] },
+    \   { 'block' : ['〔', '〕'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['K'] },
+    \   { 'block' : ['《', '》'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['Z'] },
+    \ ]
 
 " fzf
 nnoremap <silent> <Leader>f :Files<CR>
@@ -349,7 +366,7 @@ set shiftwidth=2
 set softtabstop=2
 
 set showmatch
-set matchpairs& matchpairs+=<:>
+set matchpairs& matchpairs+=<:>,「:」,『:』,（:）,【:】,《:》,〈:〉,［:］,‘:’,“:”,｛:｝,〔:〕
 set matchtime=3
 set showcmd
 
