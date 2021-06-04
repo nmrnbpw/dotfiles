@@ -226,8 +226,8 @@ endif
 " let g:airline_symbols.linenr = '☰'
 " let g:airline_symbols.maxlinenr = ''
 
+set termguicolors
 if has("gui_running")
-  set termguicolors
   set cursorline
   set cursorcolumn
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
@@ -388,9 +388,15 @@ set ignorecase
 set incsearch
 set wrapscan
 set smartcase
-set wildmenu
 set completeopt=menuone,noinsert
 set breakindent
+
+set wildmenu
+
+set lazyredraw
+
+set emoji
+
 
 " color pablo
 " set background=light
@@ -409,6 +415,8 @@ set belloff=all
 
 set hidden
 set autochdir
+
+set nrformats=
 
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
@@ -461,6 +469,12 @@ if has("gui_running")
     set iminsert=0
     set imsearch=0
     inoremap <ESC> <ESC>:set iminsert=0<CR>
+
+    set shellslash
+    " スペースを含むファイル名を許可
+    set isfname+=32
+    " ダイアログの初期ディレクトリをバッファーのある位置に変更
+    set browsedir=buffer
   endif
 endif
 
@@ -501,8 +515,4 @@ call denite#custom#var('grep', 'final_opts', [])
 "call denite#start([{'name': 'grep',
 "      \ 'args': [['a.vim', 'b.vim'], '', 'pattern']}])
 "
-
-
-
-cd ~
 
