@@ -1,0 +1,20 @@
+version: 2
+root-markers:
+  - .git/
+
+tools:
+  textlint: &textlint
+    lint-command: 'npx textlint --format unix --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+    lint-formats:
+      - '%f:%l:%n: %m [%trror/%r]'
+    root-markers:
+      - .textlintrc
+
+languages:
+  markdown:
+    - <<: *textlint
+  asciidoc:
+    - <<: *textlint
+

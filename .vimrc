@@ -1,6 +1,13 @@
+" --------------------------------------------------------------------------------
+"
+"   .vimrc
+"
+" --------------------------------------------------------------------------------
+
 set encoding=utf-8
 scriptencoding utf-8
 
+" --------------------------------------------------------------------------------
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -39,6 +46,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-surround')
   call dein#add('rhysd/vim-operator-surround')
   call dein#add('nathanaelkane/vim-indent-guides')
+
+  call dein#add('habamax/vim-asciidoctor')
 
   " You can specify revision/branch/tag.
   " call dein#add('Shougo/deol.nvim', { 'rev': '01203d4c9' })
@@ -101,6 +110,7 @@ endif
 "End dein Scripts-------------------------
 
 
+" --------------------------------------------------------------------------------
 let g:solarized_termtrans=1
 syntax on
 let g:solarized_termcolors=256
@@ -112,19 +122,27 @@ colorscheme solarized
 " source $VIMRUNTIME/mswin.vim
 " behave mswin
 
+
+" --------------------------------------------------------------------------------
 " ripgrep
 if executable('rg')
   set grepprg=rg\ --vimgrep\ --no-heading
   set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+
+" --------------------------------------------------------------------------------
 " ale
 set signcolumn=yes
 let g:ale_sign_column_always = 1
 let g:ale_fix_on_save=1
 let g:ale_ling_on_text_changed=0
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
+let g:ale_sign_error = 'X'
+let g:ale_sign_warning = '!'
+if has("gui_running")
+  let g:ale_sign_error = ''
+  let g:ale_sign_warning = ''
+endif
 let g:airline#extensions#ale#open_lnum_symbol = '('
 let g:airline#extensions#ale#close_lnum_symbol = ')'
 let g:ale_echo_msg_format = '[%linter%]%code: %%s'
@@ -133,10 +151,15 @@ highlight link ALEWarningSign StorageClass
 " Ctrl + kで次の指摘へ、Ctrl + jで前の指摘へ移動
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['X %d', '! %d', ' ok']
+if has("gui_running")
+  let g:ale_statusline_format = [' %d', ' %d', '◆ ok']
+endif
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
+
+" --------------------------------------------------------------------------------
 " vim-operator-surround
 map sa <Plug>(operator-surround-append)
 map sd <Plug>(operator-surround-delete)a
@@ -154,14 +177,26 @@ let g:operator#surround#blocks['-'] = [
     \   { 'block' : ['《', '》'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['Z'] },
     \ ]
 
+
+" --------------------------------------------------------------------------------
 " fzf
+if has('gui_running') 
+nnoremap <silent> <Leader>f :Files!<CR>
+nnoremap <silent> <Leader>g :GFiles!<CR>
+nnoremap <silent> <Leader>G :GFiles?!<CR>
+nnoremap <silent> <Leader>b :Buffers!<CR>
+nnoremap <silent> <Leader>h :History!<CR>
+nnoremap <silent> <Leader>r :Rg!<CR>
+else
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>g :GFiles<CR>
 nnoremap <silent> <Leader>G :GFiles?<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>h :History<CR>
 nnoremap <silent> <Leader>r :Rg<CR>
+endif
 
+" --------------------------------------------------------------------------------
 " vimdoc-ja
 :set helplang=ja,en
 
@@ -177,6 +212,8 @@ nnoremap <silent> <Leader>r :Rg<CR>
 " let g:NERDTreeExtensionHighlightColor = {}
 " let g:NERDTreeExtensionHighlightColor['vue'] = '42B983'
 
+
+" --------------------------------------------------------------------------------
 " vim-airline
 let g:airline_solarized_bg='dark'
 let g:airline_theme='solarized'
@@ -196,35 +233,6 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-" unicode symbols
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_symbols.crypt = '🔒'
-" let g:airline_symbols.linenr = '☰'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.maxlinenr = ''
-" let g:airline_symbols.maxlinenr = '㏑'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-" let g:airline_symbols.spell = 'Ꞩ'
-" let g:airline_symbols.notexists = '∄'
-" let g:airline_symbols.whitespace = 'Ξ'
-
-" powerline symbols
-" let g:airline_left_sep = ''
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_sep = ''
-" let g:airline_right_alt_sep = ''
-" let g:airline_symbols.branch = ''
-" let g:airline_symbols.readonly = ''
-" let g:airline_symbols.linenr = '☰'
-" let g:airline_symbols.maxlinenr = ''
 
 set termguicolors
 if has("gui_running")
@@ -241,9 +249,98 @@ else
   let g:python3_host_prog = expand('~\AppData\Local\Programs\Python\Python39\python.exe')
 endif
 
+
+" --------------------------------------------------------------------------------
+" vim-asciidoctor
+" What to use for HTML, default `asciidoctor`.
+let g:asciidoctor_executable = 'asciidoctor'
+
+" What extensions to use for HTML, default `[]`.
+let g:asciidoctor_extensions = ['asciidoctor-diagram', 'asciidoctor-rouge']
+" let g:asciidoctor_extensions = ['asciidoctor-diagram', 'coderay']
+
+" Path to the custom css
+" let g:asciidoctor_css_path = '~/docs/AsciiDocThemes'
+
+" Custom css name to use instead of built-in
+" let g:asciidoctor_css = 'haba-asciidoctor.css'
+" let g:asciidoctor_css = 'compact.css'
+
+" What to use for PDF, default `asciidoctor-pdf`.
+let g:asciidoctor_pdf_executable = 'asciidoctor-pdf'
+
+" What extensions to use for PDF, default `[]`.
+let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
+
+" Path to PDF themes, default `''`.
+" let g:asciidoctor_pdf_themes_path = '~/docs/AsciiDocThemes'
+
+" Path to PDF fonts, default `''`.
+" let g:asciidoctor_pdf_fonts_path = '~/docs/AsciiDocThemes/fonts'
+
+" What to use for DOCX, default `pandoc`.
+" The DOCX 'compilation' process is to generate `docbook` using
+" `g:asciidoctor_executable` and then to generate DOCX out of `docbook`
+" using `pandoc`.
+let g:asciidoctor_pandoc_executable = 'pandoc'
+
+"" --data-dir
+let g:asciidoctor_pandoc_data_dir = './docs/.pandoc'
+
+" Other parameters you want to feed pandoc
+let g:asciidoctor_pandoc_other_params = '--toc'
+
+" Reference document to reuse styles
+" If not set up asciidoctor looks for the theme name
+" :pdf-style: mytheme
+" in the first 30 lines and generate reference-doc filnae:
+" g:asciidoctor_pandoc_data_dir + mytheme + '-reference.docx'
+" for example: ~/docs/.pandoc/mytheme-reference.docx
+let g:asciidoctor_pandoc_reference_doc = 'custom-reference.docx'
+
+" Fold sections, default `0`.
+let g:asciidoctor_folding = 1
+
+" Fold options, default `0`.
+let g:asciidoctor_fold_options = 1
+
+" Conceal *bold*, _italic_, `code` and urls in lists and paragraphs, default `0`.
+" See limitations in end of the README
+let g:asciidoctor_syntax_conceal = 1
+
+" Highlight indented text, default `1`.
+let g:asciidoctor_syntax_indented = 0
+
+" List of filetypes to highlight, default `[]`
+let g:asciidoctor_fenced_languages = ['python', 'c', 'cpp', 'javascript']
+
+" Function to create buffer local mappings and add default compiler
+fun! AsciidoctorMappings()
+    nnoremap <buffer> <leader>oo :AsciidoctorOpenRAW<CR>
+    nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
+    nnoremap <buffer> <leader>oh :AsciidoctorOpenHTML<CR>
+    nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
+    nnoremap <buffer> <leader>ch :Asciidoctor2HTML<CR>
+    nnoremap <buffer> <leader>cp :Asciidoctor2PDF<CR>
+    nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>
+    nnoremap <buffer> <leader>p :AsciidoctorPasteImage<CR>
+    " :make will build pdfs
+    compiler asciidoctor2pdf
+endfun
+
+" Call AsciidoctorMappings for all `*.adoc` and `*.asciidoc` files
+augroup asciidoctor
+    au!
+    au BufEnter *.adoc,*.asciidoc call AsciidoctorMappings()
+augroup END
+
+
+" --------------------------------------------------------------------------------
 " rust
 let g:rustfmt_autosave = 1
 
+
+" --------------------------------------------------------------------------------
 " Vista
 function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
@@ -257,6 +354,7 @@ set statusline+=%{NearestMethodOrFunction()}
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 
+" --------------------------------------------------------------------------------
 " Defx
 " nnoremap <silent> <Leader>f :<C-u> Defx <CR>
 autocmd FileType defx call s:defx_my_settings()
@@ -342,16 +440,18 @@ autocmd BufWritePost * call defx#redraw()
 autocmd BufEnter * call defx#redraw()
 
 call defx#custom#column('git', 'indicators', {
-  \ 'Modified'  : '✹',
-  \ 'Staged'    : '✚',
-  \ 'Untracked' : '✭',
-  \ 'Renamed'   : '➜',
-  \ 'Unmerged'  : '═',
-  \ 'Ignored'   : '☒',
-  \ 'Deleted'   : '✖',
+  \ 'Modified'  : '*',
+  \ 'Staged'    : '+',
+  \ 'Untracked' : '?',
+  \ 'Renamed'   : '@',
+  \ 'Unmerged'  : '!',
+  \ 'Ignored'   : ' ',
+  \ 'Deleted'   : 'x',
   \ 'Unknown'   : '?'
   \ })
 
+
+" --------------------------------------------------------------------------------
 
 set number
 set relativenumber
@@ -388,7 +488,7 @@ set ignorecase
 set incsearch
 set wrapscan
 set smartcase
-set completeopt=menuone,noinsert
+set completeopt=menuone,preview,noinsert
 set breakindent
 
 set wildmenu
@@ -425,10 +525,10 @@ let mapleader="\<BS>"
 
 vmap <Leader>y "*y
 
-nmap <Leader>y ggVG"*y``
+nmap <Leader>Y ggVG"*y``
 nmap <Leader>p "*p
-nmap <Leader>P ggVGd"*P
-nmap <Leader>v ggVG
+nmap <Leader>P "*P
+nmap <Leader>V ggVG
 
 
 map <Leader><Up> :bd<CR>
@@ -487,6 +587,7 @@ else
   language messages en
 endif
 
+" --------------------------------------------------------------------------------
 " Denite
 " Change file/rec command 
 call denite#custom#var('file/rec', 'command',
@@ -502,6 +603,7 @@ call denite#custom#var('grep', {
            \ 'final_opts': [],
            \ })
 
+" --------------------------------------------------------------------------------
 " Ripgrep command on grep source
 call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_opts',
@@ -515,4 +617,3 @@ call denite#custom#var('grep', 'final_opts', [])
 "call denite#start([{'name': 'grep',
 "      \ 'args': [['a.vim', 'b.vim'], '', 'pattern']}])
 "
-
