@@ -68,7 +68,9 @@ if dein#load_state(s:dein_dir)
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
+
   call dein#add('altercation/vim-colors-solarized')
+  call dein#add('morhetz/gruvbox')
 
   call dein#add('ryanoasis/vim-devicons')
   call dein#add('kristijanhusak/defx-icons')
@@ -111,11 +113,13 @@ endif
 
 
 " --------------------------------------------------------------------------------
-let g:solarized_termtrans=1
+" let g:solarized_termtrans=1
 syntax on
-let g:solarized_termcolors=256
+" let g:solarized_termcolors=256
 set background=dark
-colorscheme solarized
+
+colorscheme gruvbox
+" colorscheme solarized
 " colorscheme desert
 " set nocompatible
 " source $VIMRUNTIME/vimrc_example.vim
@@ -215,8 +219,9 @@ endif
 
 " --------------------------------------------------------------------------------
 " vim-airline
-let g:airline_solarized_bg='dark'
-let g:airline_theme='solarized'
+" let g:airline_solarized_bg='dark'
+" let g:airline_theme='solarized'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#show_buffers=1
 let g:airline#extensions#tabline#buffer_idx_mode=1
@@ -520,6 +525,8 @@ set nrformats=
 
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let mapleader="\<BS>"
 

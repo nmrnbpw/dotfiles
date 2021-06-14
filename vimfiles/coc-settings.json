@@ -1,10 +1,11 @@
 {
+  "coc.preferences.formatOnType": true,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.useQuickfixForLocations": true,
 
   "suggest.enablePreview": true,
   "suggest.timeout": 5000,
-  "suggest.autoTrigger": "none",
+  "suggest.autoTrigger": "trigger",
   "coc.source.file.triggerCharacters": [
     "/", "(", ",", "."
   ],
@@ -31,7 +32,7 @@
     "efm": {
       "command": "efm-langserver",
       "args": [],
-      "filetypes": ["markdown", "asciidoc", "adoc", "asciidoctor"]
+      "filetypes": ["markdown", "asciidoc", "adoc", "asciidoctor", "vim"]
     }
   }
 }

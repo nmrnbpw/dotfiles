@@ -3,6 +3,10 @@ root-markers:
   - .git/
 
 tools:
+  vint: &vint
+    lint-command: 'vint -'
+    lint-stdin: true
+
   textlint: &textlint
     lint-command: 'npx textlint --format unix --stdin --stdin-filename ${INPUT}'
     lint-ignore-exit-code: true
@@ -17,4 +21,6 @@ languages:
     - <<: *textlint
   asciidoc:
     - <<: *textlint
+  vim:
+    - <<: *vint
 
