@@ -34,8 +34,6 @@ if dein#load_state(s:dein_dir)
   " Required:
   call dein#add(s:dein_repo_dir)
 
-  call dein#add('vim-jp/vimdoc-ja')
-
   " Add or remove your plugins here:
   " call dein#add('Shougo/neosnippet.vim')
   " call dein#add('Shougo/neosnippet-snippets')
@@ -54,14 +52,21 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/deol.nvim')
   call dein#add('Shougo/denite.nvim')
   if !has('nvim')
+    call dein#add('vim-jp/vimdoc-ja')
+
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
+  else
+    call dein#add('nekowasabi/nvimdoc-ja')
   endif
   call dein#add('Shougo/defx.nvim')
   call dein#add('Shougo/deoppet.nvim')
 
-  call dein#add('junegunn/fzf', { 'build': './install' })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'junegunn/fzf' })
+  " ./install --all so the interactive script doesn't block
+  " you can check the other command line options  in the install file
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+
   call dein#add('dense-analysis/ale')
   call dein#add('dhruvasagar/vim-table-mode')
   call dein#add('tpope/vim-fugitive')
@@ -83,9 +88,12 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/unite-outline')
 
-  call dein#add('neoclide/coc.nvim')
+  " NOTE: https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#using-deinvim
+  call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
   call dein#add('rust-lang/rust.vim')
+
+  call dein#add('github/copilot.vim')
 
   " call dein#add('reconquest/vim-pythonx')
 
@@ -118,9 +126,9 @@ syntax on
 " let g:solarized_termcolors=256
 set background=dark
 
-colorscheme gruvbox
 " colorscheme solarized
 " colorscheme desert
+colorscheme gruvbox
 " set nocompatible
 " source $VIMRUNTIME/vimrc_example.vim
 " source $VIMRUNTIME/mswin.vim
@@ -143,7 +151,7 @@ let g:ale_fix_on_save=1
 let g:ale_ling_on_text_changed=0
 let g:ale_sign_error = 'X'
 let g:ale_sign_warning = '!'
-if has("gui_running")
+if has("gui_running") || has("nvim")
   let g:ale_sign_error = ''
   let g:ale_sign_warning = ''
 endif
@@ -156,7 +164,7 @@ highlight link ALEWarningSign StorageClass
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_statusline_format = ['X %d', '! %d', ' ok']
-if has("gui_running")
+if has("gui_running") || has("nvim")
   let g:ale_statusline_format = [' %d', ' %d', '◆ ok']
 endif
 let g:ale_set_loclist = 0
@@ -184,20 +192,20 @@ let g:operator#surround#blocks['-'] = [
 
 " --------------------------------------------------------------------------------
 " fzf
-if has('gui_running') 
-nnoremap <silent> <Leader>f :Files!<CR>
-nnoremap <silent> <Leader>g :GFiles!<CR>
-nnoremap <silent> <Leader>G :GFiles?!<CR>
-nnoremap <silent> <Leader>b :Buffers!<CR>
-nnoremap <silent> <Leader>h :History!<CR>
-nnoremap <silent> <Leader>r :Rg!<CR>
+if has('gui_running') && !has('nvim')
+  nnoremap <silent> <Leader>f :Files!<CR>
+  nnoremap <silent> <Leader>g :GFiles!<CR>
+  nnoremap <silent> <Leader>G :GFiles?!<CR>
+  nnoremap <silent> <Leader>b :Buffers!<CR>
+  nnoremap <silent> <Leader>h :History!<CR>
+  nnoremap <silent> <Leader>r :Rg!<CR>
 else
-nnoremap <silent> <Leader>f :Files<CR>
-nnoremap <silent> <Leader>g :GFiles<CR>
-nnoremap <silent> <Leader>G :GFiles?<CR>
-nnoremap <silent> <Leader>b :Buffers<CR>
-nnoremap <silent> <Leader>h :History<CR>
-nnoremap <silent> <Leader>r :Rg<CR>
+  nnoremap <silent> <Leader>f :Files<CR>
+  nnoremap <silent> <Leader>g :GFiles<CR>
+  nnoremap <silent> <Leader>G :GFiles?<CR>
+  nnoremap <silent> <Leader>b :Buffers<CR>
+  nnoremap <silent> <Leader>h :History<CR>
+  nnoremap <silent> <Leader>r :Rg<CR>
 endif
 
 " --------------------------------------------------------------------------------
@@ -229,7 +237,7 @@ let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#show_tabs=0
 let g:airline#extensions#wgutesoace=1
 
-if has("gui_running")
+if has("gui_running") || has("nvim")
   let g:airline_powerline_fonts=1
   let g:Powerline_symbols='unicode'
 endif
@@ -240,7 +248,7 @@ endif
 
 
 set termguicolors
-if has("gui_running")
+if has("gui_running") || has("nvim")
   set cursorline
   set cursorcolumn
   highlight CurosrLine cterm=underline ctermfg=NONE ctermbg=NONE
@@ -328,7 +336,7 @@ fun! AsciidoctorMappings()
     nnoremap <buffer> <leader>ch :Asciidoctor2HTML<CR>
     nnoremap <buffer> <leader>cp :Asciidoctor2PDF<CR>
     nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>
-    nnoremap <buffer> <leader>p :AsciidoctorPasteImage<CR>
+    " nnoremap <buffer> <leader>p :AsciidoctorPasteImage<CR>
     " :make will build pdfs
     compiler asciidoctor2pdf
 endfun
@@ -549,7 +557,7 @@ map <Leader>L :blast<CR>
 
 " map <Leader>f :NERDTreeToggle<CR>
 
-if has("gui_running")
+if has("gui_running") || has("nvim")
   if has("windows")
     set guioptions-=m
     set guioptions-=T
@@ -560,6 +568,38 @@ if has("gui_running")
     set guioptions-=b
     set guioptions-=e
 
+    if has("nvim")
+      " Enable Mouse
+      set mouse=a
+
+      " Set Editor Font
+      if exists(':GuiFont')
+        " Use GuiFont! to ignore font errors
+        GuiFont {font_name}:h{size}
+      endif
+
+      " Disable GUI Tabline
+      if exists(':GuiTabline')
+        GuiTabline 0
+      endif
+
+      " Disable GUI Popupmenu
+      if exists(':GuiPopupmenu')
+        GuiPopupmenu 0
+      endif
+
+      " Enable GUI ScrollBar
+      if exists(':GuiScrollBar')
+        GuiScrollBar 1
+      endif
+
+      " Right Click Context Menu (Copy-Cut-Paste)
+      nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
+      inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
+      xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
+      snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
+    end
+
     " set guifont=VL_Gothic_Regular:h11,Source_Code_Pro:h11
     " set guifont=NasuM:h11:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
     " set guifont=Cica:h12:cSHIFTJIS:qDRAFT,Source_Code_Pro:h11
@@ -569,8 +609,11 @@ if has("gui_running")
 
     set guifont=Cica:h12:cDEFAULT:qDRAFT
     set printfont=Cica:h8
-    set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
     set ambiwidth=double
+
+    if !has("nvim")
+      set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+    end
 
     " set imdisable
     set iminsert=0

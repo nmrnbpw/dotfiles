@@ -21,6 +21,8 @@ languages:
     - <<: *textlint
   asciidoc:
     - <<: *textlint
+  asciidoctor:
+    - <<: *textlint
   vim:
     - <<: *vint
 
