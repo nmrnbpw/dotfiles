@@ -49,6 +49,18 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
+bindkey "^[[1;5C" forward-word    # Ctrl + Right
+bindkey "^[[1;5D" backward-word   # Ctrl + Left
+bindkey "^[[1;2C" forward-word    # Shift + Right
+bindkey "^[[1;2D" backward-word   # Shift + Left
+bindkey "^[[1;3C" forward-word    # Alt + Right
+bindkey "^[[1;3D" backward-word   # Alt + Left
+bindkey "^[[1;6C" forward-word    # Ctrl + Shift + Right
+bindkey "^[[1;6D" backward-word   # Ctrl + Shift + Left
+bindkey "^[[1;7D" backward-word   # Ctrl + Alt + Right
+bindkey "^[[1;7D" backward-word   # Ctrl + Alt + Left
+bindkey "^[[1;8D" backward-word   # Ctrl + Shift + Alt + Right
+bindkey "^[[1;8D" backward-word   # Ctrl + Shift + Alt + Left
 
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
