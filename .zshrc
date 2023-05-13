@@ -22,7 +22,6 @@ setopt notify            # バックグラウンドジョブの状態変化を�
 setopt equals            # =commandを`which command`と同じ処理にする
 
 ### Complement ###
-autoload -U compinit; compinit # 補完機能を有効にする
 setopt auto_list               # 補完候補を一覧で表示する(d)
 setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
 setopt list_packed             # 補完候補をできるだけ詰めて表示する
@@ -36,8 +35,6 @@ unsetopt caseglob    # ファイルグロブで大文字小文字を区別しな
 
 ### History ###
 HISTFILE=~/.zsh_history   # ヒストリを保存するファイル
-HISTSIZE=10000            # メモリに保存されるヒストリの件数
-SAVEHIST=10000            # 保存されるヒストリの件数
 setopt bang_hist          # !を使ったヒストリ展開を行う(d)
 setopt extended_history   # ヒストリに実行時間も保存する
 setopt hist_ignore_dups   # 直前と同じコマンドはヒストリに追加しない
@@ -100,8 +97,6 @@ function rprompt-git-current-branch {
   echo "${branch_status}[$branch_name]"
 }
 
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
 
 # ------------------------------
 # Look And Feel Settings
@@ -169,17 +164,10 @@ prompt adam1
 
 setopt histignorealldups sharehistory
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
-
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history
-
-# Use modern completion system
-autoload -Uz compinit
-compinit
 
 autoload colors
 
@@ -239,16 +227,11 @@ bindkey "^N" history-beginning-search-forward-end
 
 PROMPT="[%n@%m %~]%(!.#.$) "
 
-setopt AUTO_MENU
-setopt AUTO_CD
-setopt AUTO_PUSHD
-setopt CORRECT
 setopt PUSHD_IGNORE_DUPS
 setopt TRANSIENT_RPROMPT
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
 setopt HIST_NO_FUNCTIONS
-setopt HIST_IGNORE_DUPS
 unsetopt HIST_VERIFY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_NO_STORE
