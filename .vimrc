@@ -72,7 +72,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-fugitive')
 
   call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
+  " call dein#add('vim-airline/vim-airline-themes')
 
   call dein#add('altercation/vim-colors-solarized')
   call dein#add('morhetz/gruvbox')
@@ -89,16 +89,31 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/unite-outline')
 
   " NOTE: https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#using-deinvim
-  call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
+  " call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
   call dein#add('rust-lang/rust.vim')
 
-  call dein#add('github/copilot.vim')
-
   " call dein#add('reconquest/vim-pythonx')
 
-  " call dein#add('prabirshrestha/vim-lsp')
-  " call dein#add('mattn/vim-lsp-settings')
+  call dein#add('Shougo/ddc.vim')
+  call dein#add('Shougo/ddc-around')
+  call dein#add('Shougo/pum.vim')
+  call dein#add('Shougo/ddc-matcher_head')
+  call dein#add('Shougo/ddc-sorter_rank')
+  call dein#add('Shougo/ddc-converter_remove_overlap')
+  call dein#add('LumaKernel/ddc-file')
+  call dein#add('vim-denops/denops.vim')
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('mattn/vim-lsp-settings')
+
+  call dein#add('rbtnn/vim-ambiwidth')
+
+  call dein#add('prettier/vim-prettier', {'build': 'npm install'})
+
+  call dein#add('gw31415/fzyselect.vim')
+
+  call dein#add('godlygeek/tabular')
+  call dein#add('preservim/vim-markdown')
 
   " call dein#add('prabirshrestha/asyncomplete.vim')
   " call dein#add('prabirshrestha/asyncomplete-lsp.vim')
@@ -269,8 +284,8 @@ endif
 let g:asciidoctor_executable = 'asciidoctor'
 
 " What extensions to use for HTML, default `[]`.
-let g:asciidoctor_extensions = ['asciidoctor-diagram', 'asciidoctor-rouge']
-" let g:asciidoctor_extensions = ['asciidoctor-diagram', 'coderay']
+" let g:asciidoctor_extensions = ['asciidoctor-diagram', 'asciidoctor-rouge']
+let g:asciidoctor_extensions = ['asciidoctor-diagram', 'coderay']
 
 " Path to the custom css
 " let g:asciidoctor_css_path = '~/docs/AsciiDocThemes'
@@ -534,7 +549,7 @@ set nrformats=
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let mapleader="\<BS>"
 
@@ -666,4 +681,43 @@ call denite#custom#var('grep', 'final_opts', [])
 " Specify multiple paths in grep source
 "call denite#start([{'name': 'grep',
 "      \ 'args': [['a.vim', 'b.vim'], '', 'pattern']}])
-"
+
+
+" --------------------------------------------------------------------------------
+" ddc.vim
+call ddc#custom#patch_global('completionMenu', 'pum.vim')
+call ddc#custom#patch_global('sources', [
+ \ 'around',
+ \ 'vim-lsp',
+ \ 'file'
+ \ ])
+call ddc#custom#patch_global('sourceOptions', {
+ \ '_': {
+ \   'matchers': ['matcher_head'],
+ \   'sorters': ['sorter_rank'],
+ \   'converters': ['converter_remove_overlap'],
+ \ },
+ \ 'around': {'mark': 'Around'},
+ \ 'vim-lsp': {
+ \   'mark': 'LSP', 
+ \   'matchers': ['matcher_head'],
+ \   'forceCompletionPattern': '\.|:|->|"\w+/*'
+ \ },
+ \ 'file': {
+ \   'mark': 'file',
+ \   'isVolatile': v:true, 
+ \   'forceCompletionPattern': '\S/\S*'
+ \ }})
+call ddc#enable()
+inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
+
+" --------------------------------------------------------------------------------
+" fzyselect.vim
+fu! s:fzy_keymap()
+	nmap <buffer> i <Plug>(fzyselect-fzy)
+	nmap <buffer> <cr> <Plug>(fzyselect-retu)
+	nmap <buffer> <esc> <cmd>clo<cr>
+endfu
+au FileType fzyselect cal <SID>fzy_keymap()
+
