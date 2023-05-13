@@ -534,7 +534,7 @@ set emoji
 
 set list
 " set listchars=tab:>-,extends:<,trail:-
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+# set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set backspace=indent,eol,start
 
 set hlsearch
@@ -624,7 +624,8 @@ if has("gui_running") || has("nvim")
 
     set guifont=Cica:h12:cDEFAULT:qDRAFT
     set printfont=Cica:h8
-    set ambiwidth=double
+    " set ambiwidth=double
+    set ambiwidth=single
 
     if !has("nvim")
       set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
