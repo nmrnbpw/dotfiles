@@ -204,13 +204,15 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Auto pushd/popd
 DIRSTACKSIZE=100
-setopt AUTO_PUSHD
 
 autoload -Uz compinit && compinit
 
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu interactive
+# zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:descruotions' format '%BCompketing%b %U%d%u'
+
+setopt menu_complete
 
 # Coloring ls
 export LSCOLORS=exfxcxfxbxegedabagacad
