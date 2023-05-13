@@ -96,6 +96,7 @@ if dein#load_state(s:dein_dir)
   " call dein#add('reconquest/vim-pythonx')
 
   call dein#add('Shougo/ddc.vim')
+  call dein#add('Shougo/ddc-ui-native')
   call dein#add('Shougo/ddc-around')
   call dein#add('Shougo/pum.vim')
   call dein#add('Shougo/ddc-matcher_head')
@@ -105,6 +106,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('vim-denops/denops.vim')
   call dein#add('prabirshrestha/vim-lsp')
   call dein#add('mattn/vim-lsp-settings')
+  call dein#add('shun/ddc-source-vim-lsp')
 
   call dein#add('rbtnn/vim-ambiwidth')
 
@@ -534,7 +536,7 @@ set emoji
 
 set list
 " set listchars=tab:>-,extends:<,trail:-
-# set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set backspace=indent,eol,start
 
 set hlsearch
@@ -686,6 +688,7 @@ call denite#custom#var('grep', 'final_opts', [])
 
 " --------------------------------------------------------------------------------
 " ddc.vim
+call ddc#custom#patch_global('ui', 'native')
 call ddc#custom#patch_global('completionMenu', 'pum.vim')
 call ddc#custom#patch_global('sources', [
  \ 'around',
