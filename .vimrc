@@ -572,6 +572,8 @@ map <Leader>l :bnext<CR>
 map <Leader>H :bfirst<CR>
 map <Leader>L :blast<CR>
 
+set mouse=
+
 " map <Leader>f :NERDTreeToggle<CR>
 
 if has("gui_running") || has("nvim")
