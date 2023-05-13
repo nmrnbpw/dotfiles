@@ -689,30 +689,41 @@ call denite#custom#var('grep', 'final_opts', [])
 " --------------------------------------------------------------------------------
 " ddc.vim
 call ddc#custom#patch_global('ui', 'native')
-call ddc#custom#patch_global('completionMenu', 'pum.vim')
+" call ddc#custom#patch_global('ui', 'pum')
+call ddc#custom#patch_global('autoCompleteEvents', [
+\  'InsertEnter', 'TextChangedI', 'TextChangedP',
+\  'CmdlineEnter', 'CmdlineChanged',
+\ ])
 call ddc#custom#patch_global('sources', [
- \ 'around',
- \ 'vim-lsp',
- \ 'file'
+      \ 'around',
+      \ 'vim-lsp',
+      \ 'file',
  \ ])
 call ddc#custom#patch_global('sourceOptions', {
  \ '_': {
+ \   'ignoreCase': v:true,
  \   'matchers': ['matcher_head'],
  \   'sorters': ['sorter_rank'],
  \   'converters': ['converter_remove_overlap'],
  \ },
- \ 'around': {'mark': 'Around'},
+ \ 'around': {'mark': '[Around]'},
  \ 'vim-lsp': {
- \   'mark': 'LSP', 
+ \   'mark': '[LSP]', 
  \   'matchers': ['matcher_head'],
  \   'forceCompletionPattern': '\.|:|->|"\w+/*'
  \ },
+ \ 'lsp': {
+ \   'mark': '[LSP]',
+ \ },
  \ 'file': {
- \   'mark': 'file',
+ \   'mark': '[File]',
  \   'isVolatile': v:true, 
  \   'forceCompletionPattern': '\S/\S*'
- \ }})
+ \ },
+ \ })
 call ddc#enable()
+
+
 inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
 
@@ -724,4 +735,5 @@ fu! s:fzy_keymap()
 	nmap <buffer> <esc> <cmd>clo<cr>
 endfu
 au FileType fzyselect cal <SID>fzy_keymap()
+
 
