@@ -41,8 +41,11 @@ if dein#load_state(s:dein_dir)
   call dein#add('kana/vim-operator-user')
   call dein#add('kana/vim-textobj-user')
   call dein#add('kana/vim-operator-replace')
-  call dein#add('tpope/vim-surround')
+  " call dein#add('tpope/vim-surround')
   call dein#add('rhysd/vim-operator-surround')
+  call dein#add('thinca/vim-textobj-between')
+  call dein#add('rhysd/vim-textobj-anyblock')
+
   call dein#add('nathanaelkane/vim-indent-guides')
 
   call dein#add('habamax/vim-asciidoctor')
@@ -193,6 +196,20 @@ let g:ale_set_quickfix = 1
 map Sa <Plug>(operator-surround-append)
 map Sd <Plug>(operator-surround-delete)a
 map Sr <Plug>(operator-surround-replace)a
+
+" delete or replace most inner surround
+
+" if you use vim-textobj-multiblock
+nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+
+" if you use vim-textobj-anyblock
+nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-anyblock-a)
+nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-anyblock-a)
+
+" if you use vim-textobj-between
+nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
+nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 let g:operator#surround#blocks = {}
 let g:operator#surround#blocks['-'] = [
