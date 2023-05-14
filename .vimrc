@@ -756,3 +756,6 @@ endfu
 au FileType fzyselect cal <SID>fzy_keymap()
 
 
+" --------------------------------------------------------------------------------
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
