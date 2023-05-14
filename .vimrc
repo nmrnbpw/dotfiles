@@ -190,9 +190,9 @@ let g:ale_set_quickfix = 1
 
 " --------------------------------------------------------------------------------
 " vim-operator-surround
-map sa <Plug>(operator-surround-append)
-map sd <Plug>(operator-surround-delete)a
-map sr <Plug>(operator-surround-replace)a
+map Sa <Plug>(operator-surround-append)
+map Sd <Plug>(operator-surround-delete)a
+map Sr <Plug>(operator-surround-replace)a
 
 let g:operator#surround#blocks = {}
 let g:operator#surround#blocks['-'] = [
