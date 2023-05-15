@@ -210,6 +210,7 @@ alias ls="ls -GS --color=auto"
 alias la="ls -la --color=auto"
 alias ll="ls -l --color=auto"
 
+alias gco='git checkout $(git branch -a | grep -v "remotes/origin/HEAD" | sed -E "s|^\*? *||" | fzf --preview="git log {} -n10 --color" --prompt="current branch: $(git branch --show-current) >>> ")'
 # alias tmux="TERM=xterm-256color tmux"
 
 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
