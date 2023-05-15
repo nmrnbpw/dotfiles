@@ -243,4 +243,5 @@ export PYTHONPATH=$PYTHONPATH:/usr/local/lib/svn-python
 export PATH=/usr/local/bin:$PATH
 # source $(which virtualenvwrapper.sh)
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
