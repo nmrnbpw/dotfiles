@@ -604,10 +604,10 @@ if has("gui_running") || has("nvim")
     set guioptions-=b
     set guioptions-=e
 
-    if has("nvim")
-      " Enable Mouse
-      set mouse=a
+    " Enable Mouse
+    set mouse=a
 
+    if has("nvim")
       " Set Editor Font
       if exists(':GuiFont')
         " Use GuiFont! to ignore font errors
