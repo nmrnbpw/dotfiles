@@ -59,6 +59,8 @@ bindkey "^[[1;7D" backward-word   # Ctrl + Alt + Right
 bindkey "^[[1;7D" backward-word   # Ctrl + Alt + Left
 bindkey "^[[1;8D" backward-word   # Ctrl + Shift + Alt + Right
 bindkey "^[[1;8D" backward-word   # Ctrl + Shift + Alt + Left
+bindkey -r '^O'                   # Ctrl + O
+bindkey -r '^J'                   # Ctrl + J
 
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
