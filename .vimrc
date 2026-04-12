@@ -91,8 +91,6 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/unite-outline')
 
-
-  " call dein#add('vim-skk/eskk.vim')
   call dein#add('vim-skk/skkeleton')
 
   " NOTE: https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#using-deinvim
@@ -747,9 +745,10 @@ call ddc#custom#patch_global('sourceOptions', {
  \ })
 call ddc#enable()
 
-
 inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <Tab> <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 
 " --------------------------------------------------------------------------------
 " fzyselect.vim
@@ -766,22 +765,64 @@ au FileType fzyselect cal <SID>fzy_keymap()
 let g:vim_markdown_folding_disabled = 1
 
 " --------------------------------------------------------------------------------
-" eskk.vim
-" let g:eskk#directory = "~/.skk"
-" let g:eskk#dictionary = { 'path': "~/.skk/my_dict", 'sorted': 1, 'encoding': 'utf-8',}
-" let g:eskk#large_dictionary = {'path': "~/.skk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp',}
-" 
-" let g:eskk#kakutei_when_unique_candidate = 1 "漢字変換した時に候補が1つの場合、自動的に確定する
-" let g:eskk#enable_completion = 0             "neocompleteを入れないと、1にすると動作しなくなるため0推奨
-" " let g:eskk#no_default_mappings = 1           "デフォルトのマッピングを削除
-" let g:eskk#keep_state = 0                    "ノーマルモードに戻るとeskkモードを初期値にする
-" let g:eskk#egg_like_newline = 1              "漢字変換を確定しても改行しない。
-
-" --------------------------------------------------------------------------------
 " skkeleton.vim
-call skkeleton#config({ 'globalDictionaries': [['~/.skk/SKK-JISYO.L', 'euc-jp']] })
+call skkeleton#config({
+      \   'globalDictionaries': [
+      \     ['~/.skk/SKK-JISYO.L', 'euc-jp'],
+      \     ['~/.skk/SKK-JISYO.assoc', 'euc-jp'],
+      \     ['~/.skk/SKK-JISYO.edict', 'euc-jp'],
+      \   ],
+      \ })
+
+" hide marker
+call skkeleton#config({
+      \ 'markerHenkan': '',
+      \ 'markerHenkanSelect': '',
+      \ })
+
 imap <C-j> <Plug>(skkeleton-enable)
 cmap <C-j> <Plug>(skkeleton-enable)
+
+call skkeleton#register_keymap('henkan', "\<BS>", 'henkanBackward')
+call skkeleton#register_keymap('henkan', 'x', '')
+call add(g:skkeleton#mapped_keys, '<S-Space>')
+call skkeleton#register_keymap('henkan', '\<S-Space>', 'henkanBackward')
+
+call skkeleton#register_kanatable('rom', {
+\ 'ca': ['か', ''],
+\ 'ci': ['し', ''],
+\ 'cu': ['く', ''],
+\ 'ce': ['せ', ''],
+\ 'co': ['こ', ''],
+\ 'xn': ['ん', ''],
+\})
+
+function! SkkeletonAirline() abort
+  if !exists('*skkeleton#mode')
+    return ''
+  endif
+
+  let l:mode = get({
+        \ 'hira':    'かな',
+        \ 'kata':    'カナ',
+        \ 'hankata': '半ｶﾅ',
+        \ 'zenkaku': '全英',
+        \ 'abbrev':  'abbr',
+        \ }, skkeleton#mode(), skkeleton#mode())
+
+  let l:phase = get(get(g:, 'skkeleton#state', {}), 'phase', '')
+  if l:phase ==# 'input:okurinasi' || l:phase ==# 'input:okuriari'
+    let l:marker = '▽'
+  elseif l:phase ==# 'henkan'
+    let l:marker = '▼'
+  else
+    let l:marker = ''
+  endif
+
+  return empty(l:marker) ? l:mode : l:mode . l:marker
+endfunction
+
+let g:airline_section_x = '%{SkkeletonAirline()}'
 
 call ddc#custom#patch_global('sources', ['skkeleton'])
 call ddc#custom#patch_global('sourceOptions', {
@@ -796,11 +837,3 @@ call ddc#custom#patch_global('sourceOptions', {
     \ })
 call ddc#enable()
 
-call skkeleton#register_kanatable('rom', {
-\ 'ca': ['か', ''],
-\ 'ci': ['し', ''],
-\ 'cu': ['く', ''],
-\ 'ce': ['せ', ''],
-\ 'co': ['こ', ''],
-\ 'xn': ['ん', ''],
-\})
