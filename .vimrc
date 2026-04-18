@@ -7,6 +7,14 @@
 set encoding=utf-8
 scriptencoding utf-8
 
+if has('unix')
+  let usr_vim_runtime_path = "~/usr/share/vim/vim92"
+  if filereadable(expand(usr_vim_runtime_path))
+    let $VIMRUNTIME=usr_vim_runtime_path . ";" . $VIMRUNTIME
+    let &runtimepath=usr_vim_runtime_path . "," . &runtimepath
+  endif
+endif
+
 " --------------------------------------------------------------------------------
 "dein Scripts-----------------------------
 if &compatible
