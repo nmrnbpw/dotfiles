@@ -779,7 +779,7 @@ call skkeleton#config({
       \     ['~/.skk/SKK-JISYO.assoc', 'euc-jp'],
       \     ['~/.skk/SKK-JISYO.edict', 'euc-jp'],
       \   ],
-      "\   'eggLikeNewline': v:true,
+      \   'eggLikeNewline': v:true,
       \ })
 
 tnoremap <S-space> <space>
