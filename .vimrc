@@ -241,7 +241,7 @@ if has('gui_running') && !has('nvim')
   nnoremap <silent> <Leader>f :Files!<CR>
   nnoremap <silent> <Leader>g :GFiles!<CR>
   nnoremap <silent> <Leader>G :GFiles?!<CR>
-  nnoremap <silent> <Leader>b :Buffers!<CR>
+  nnoremap <silent> <Leader>b :Buffers!<CR
   nnoremap <silent> <Leader>h :History!<CR>
   nnoremap <silent> <Leader>r :Rg!<CR>
 else
@@ -767,10 +767,7 @@ inoremap <Tab> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-y> <Cmd>call pum#map#confirm()<CR>
 inoremap <C-e> <Cmd>call pum#map#cancel()<CR>
-" inoremap <expr> <CR> pum#visible()
-"       \ ? "\<Cmd>call pum#map#confirm()\<CR>"
-"       \ : "\<CR>"
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <CR> pum#visible() ? "<Cmd>call pum#map#confirm()<CR>" : "\<CR>"
 
 inoremap <silent> <Plug>(pum-up)   <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <silent> <Plug>(pum-down) <Cmd>call pum#map#insert_relative(+1)<CR>
@@ -800,7 +797,7 @@ call skkeleton#config({
       \     ['~/.skk/SKK-JISYO.assoc', 'euc-jp'],
       \     ['~/.skk/SKK-JISYO.edict', 'euc-jp'],
       \   ],
-      \   'eggLikeNewline': v:true,
+      "\   'eggLikeNewline': v:true,
       \ })
 
 tnoremap <S-space> <space>
@@ -826,6 +823,8 @@ call skkeleton#register_kanatable('rom', {
 \ 'ce': ['せ', ''],
 \ 'co': ['こ', ''],
 \ 'xn': ['ん', ''],
+\ ',': ['，', ''],
+\ '.': ['。', ''],
 \})
 
 function! SkkeletonAirline() abort
