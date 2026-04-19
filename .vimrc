@@ -93,16 +93,12 @@ if dein#load_state(s:dein_dir)
   call dein#add('kristijanhusak/defx-git')
   call dein#add('liuchengxu/vista.vim')
 
-  " call dein#add('scrooloose/nerdtree')
   call dein#add('thinca/vim-quickrun')
 
   call dein#add('Shougo/neomru.vim')
   call dein#add('Shougo/unite-outline')
 
   call dein#add('vim-skk/skkeleton')
-
-  " NOTE: https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#using-deinvim
-  " call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
   call dein#add('rust-lang/rust.vim')
 
@@ -256,18 +252,6 @@ endif
 " --------------------------------------------------------------------------------
 " vimdoc-ja
 :set helplang=ja,en
-
-" NERDTree
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" let g:NERDTreeShowHidden=1
-" let g:NERDTreeDirArrows=1
-" " let g:NERDTreeDirArrowExpandable = '▸'
-" " let g:NERDTreeDirArrowCollapsible = '▾'
-" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
-" " アイコン入力方法 : `[Ctrl+V]` > `[u]` > `e905`
-" let g:NERDTreeExtensionHighlightColor = {}
-" let g:NERDTreeExtensionHighlightColor['vue'] = '42B983'
 
 
 " --------------------------------------------------------------------------------
@@ -600,8 +584,6 @@ map <Leader>H :bfirst<CR>
 map <Leader>L :blast<CR>
 
 set mouse=
-
-" map <Leader>f :NERDTreeToggle<CR>
 
 if has("gui_running") || has("nvim")
   if has("windows")
