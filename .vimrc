@@ -546,7 +546,7 @@ set ignorecase
 set incsearch
 set wrapscan
 set smartcase
-set completeopt=menuone,preview,noinsert
+set completeopt=menu,menuone,preview,noinsert
 set breakindent
 
 set wildmenu
@@ -579,7 +579,6 @@ set nrformats=
 vnoremap <c-a> <c-a>gv
 vnoremap <c-x> <c-x>gv
 
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let mapleader="\<BS>"
 
@@ -728,6 +727,7 @@ call ddc#custom#patch_global('sources', [
       \ 'around',
       \ 'vim-lsp',
       \ 'file',
+      \ 'skkeleton',
  \ ])
 call ddc#custom#patch_global('sourceOptions', {
  \ '_': {
@@ -750,6 +750,14 @@ call ddc#custom#patch_global('sourceOptions', {
  \   'isVolatile': v:true, 
  \   'forceCompletionPattern': '\S/\S*'
  \ },
+ \ 'skkeleton': {
+ \   'mark': '[skkeleton]',
+ \   'matchers': [],
+ \   'sorters': [],
+ \   'converters': [],
+ \   'isVolatile': v:true,
+ \   'minAutoCompleteLength': 1,
+ \ },
  \ })
 call ddc#enable()
 
@@ -757,6 +765,18 @@ inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <Tab> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-y> <Cmd>call pum#map#confirm()<CR>
+inoremap <C-e> <Cmd>call pum#map#cancel()<CR>
+" inoremap <expr> <CR> pum#visible()
+"       \ ? "\<Cmd>call pum#map#confirm()\<CR>"
+"       \ : "\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+inoremap <silent> <Plug>(pum-up)   <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <silent> <Plug>(pum-down) <Cmd>call pum#map#insert_relative(+1)<CR>
+
+imap <silent><expr> <Up>   pum#visible() ? "\<Plug>(pum-up)"   : "\<Up>"
+imap <silent><expr> <Down> pum#visible() ? "\<Plug>(pum-down)" : "\<Down>"
 
 " --------------------------------------------------------------------------------
 " fzyselect.vim
@@ -780,7 +800,10 @@ call skkeleton#config({
       \     ['~/.skk/SKK-JISYO.assoc', 'euc-jp'],
       \     ['~/.skk/SKK-JISYO.edict', 'euc-jp'],
       \   ],
+      \   'eggLikeNewline': v:true,
       \ })
+
+tnoremap <S-space> <space>
 
 " hide marker
 call skkeleton#config({
@@ -793,8 +816,8 @@ cmap <C-j> <Plug>(skkeleton-enable)
 
 call skkeleton#register_keymap('henkan', "\<BS>", 'henkanBackward')
 call skkeleton#register_keymap('henkan', 'x', '')
-call add(g:skkeleton#mapped_keys, '<S-Space>')
-call skkeleton#register_keymap('henkan', '\<S-Space>', 'henkanBackward')
+" call add(g:skkeleton#mapped_keys, '<S-space>')
+" call skkeleton#register_keymap('henkan', '\<S-space>', 'henkanBackward')
 
 call skkeleton#register_kanatable('rom', {
 \ 'ca': ['か', ''],
@@ -831,17 +854,4 @@ function! SkkeletonAirline() abort
 endfunction
 
 let g:airline_section_x = '%{SkkeletonAirline()}'
-
-call ddc#custom#patch_global('sources', ['skkeleton'])
-call ddc#custom#patch_global('sourceOptions', {
-    \   'skkeleton': {
-    \     'mark': 'skkeleton',
-    \     'matchers': [],
-    \     'sorters': [],
-    \     'converters': [],
-    \     'isVolatile': v:true,
-    \     'minAutoCompleteLength': 1,
-    \   },
-    \ })
-call ddc#enable()
 
